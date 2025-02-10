@@ -1,5 +1,7 @@
 # CMoE
 
+Implementation for the paper [CMoE: Fast Carving of Mixture-of-Experts for Efficient LLM Inference](https://arxiv.org/abs/2502.04416). 
+
 ## Dependencies
 
 ```bash
@@ -47,4 +49,10 @@ If you want to do evaluation on downstream tasks, you can add the arg `--eval-ze
 If you found this work useful, please consider citing:
 
 ```
+@article{pei2025cmoe,
+  title={CMoE: Fast Carving of Mixture-of-Experts for Efficient LLM Inference},
+  author={Pei, Zehua and Zou, Lancheng and Zhen, Hui-Ling and Yu, Xianzhi and Liu, Wulong and Pan, Sinno Jialin and Yuan, Mingxuan and Yu, Bei},
+  journal={arXiv preprint arXiv:2502.04416},
+  year={2025}
+}
 ```
