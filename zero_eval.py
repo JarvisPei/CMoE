@@ -19,7 +19,7 @@ def eval_zero_shot(model_name, model, tokenizer, task_list=["boolq","rte","hella
                 task_names.add(matching)
         return list(task_names)
     task_names = pattern_match(task_list, tasks.ALL_TASKS)
-    model_args = f"pretrained={model_name},cache_dir=/data/hlzhen/cache"
+    model_args = f"pretrained={model_name}"
     limit = None 
     if "70b" in model_name or "65b" in model_name:
         limit = 2000

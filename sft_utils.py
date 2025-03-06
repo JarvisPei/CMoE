@@ -14,7 +14,7 @@ def simple_sft(model, args, epoch = 1):
         lora_dropout=0.1,
         bias="none",
         task_type=TaskType.CAUSAL_LM,
-        target_modules=["q_proj","v_proj","v_proj","o_proj","gate_proj","down_proj","up_proj"]
+        target_modules=["q_proj","k_proj","v_proj","o_proj","gate_proj","down_proj","up_proj"]
     )
     model = get_peft_model(model, lora_config)
     model.print_trainable_parameters()
