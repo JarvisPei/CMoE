@@ -1,6 +1,22 @@
-# CMoE
+# CMoE: Analytical FFN-to-MoE Restructuring via Activation Pattern Analysis
 
-Implementation for the paper [CMoE: Fast Carving of Mixture-of-Experts for Efficient LLM Inference](https://arxiv.org/abs/2502.04416). 
+Official implementation of **CMoE**, an analytical post-training framework that rapidly restructures dense FFNs into sparse MoE architectures using only a small calibration dataset.
+
+## News
+
+- **[2026.04]** Updated arXiv preprint with the camera-ready title: [Analytical FFN-to-MoE Restructuring via Activation Pattern Analysis](https://arxiv.org/abs/2502.04416).
+- **[2026.04]** Our paper **"Analytical FFN-to-MoE Restructuring via Activation Pattern Analysis"** has been accepted to **ACL 2026 Main Conference** (recommended for oral presentation).
+- **[2025.02]** Initial preprint released: [CMoE: Fast Carving of Mixture-of-Experts for Efficient LLM Inference](https://arxiv.org/abs/2502.04416v1).
+
+## Overview
+
+CMoE analyzes neuron activation patterns to partition FFN neurons into:
+
+- **Shared experts** — high-frequency neurons that are always active.
+- **Routed experts** — low-frequency neurons grouped by co-activation, activated conditionally per token.
+
+A router is then constructed **analytically** from representative neuron statistics, avoiding expensive router training and enabling immediate deployment with optional lightweight fine-tuning (2k samples).
+
 
 ## Dependencies
 
@@ -17,42 +33,53 @@ pip install matplotlib==3.10.0
 pip install lap==0.5.12
 pip install peft==0.14.0
 ```
+
 Note: please modify the version of some packages for your own environment.
 
 ## Quick Start
 
-Download the models from [Huggingface](https://huggingface.co/), then the you can run the code run_cmoe.py. Set model path as 'MODEL_PATH'.
+Download the models from [Hugging Face](https://huggingface.co/), then set the model path as `MODEL_PATH` and run the pre-defined script:
 
-You can run the pre-defined testing script 'run.sh' by:
 ```bash
 bash run.sh
 ```
 
-Or resetting the hyperparameters to run customized setting.
-For example, run S2A2E16 with 2,048 fine-tuning data on wikitext2:
-```python
-python run_cmoe.py $MODEL_PATH wikitext2 \ 
---nshared 2 \
---nactivated 2 \
---nexperts 16 \
---nsamples 2048 \
---extra-lr 0.001 --bias-speed 0.001 --new-eval
+Or configure hyperparameters for a custom setting. For example, to run **S2A2E16** (2 shared + 2 active routed / 16 total experts) with 2,048 WikiText-2 fine-tuning samples:
+
+```bash
+python run_cmoe.py $MODEL_PATH wikitext2 \
+  --nshared 2 \
+  --nactivated 2 \
+  --nexperts 16 \
+  --nsamples 2048 \
+  --extra-lr 0.001 --bias-speed 0.001 --new-eval
 ```
+
+Key arguments:
+
+- `--nshared`: number of shared experts.
+- `--nactivated`: number of routed experts activated per token.
+- `--nexperts`: total number of experts.
+- `--nsamples`: number of fine-tuning samples (set to 0 for training-free mode).
 
 ## Evaluation
 
-Our code automatically run ppl eval.
-If you want to do evaluation on downstream tasks, you can add the arg `--eval-zero`, where the code is implemented by [Wanda](https://github.com/locuslab/wanda).
+The code automatically runs perplexity evaluation on the calibration dataset.
+For zero-shot downstream tasks (PIQA, WinoGrande, ARC-E/C, HellaSwag, MMLU, etc.), add `--eval-zero`. The zero-shot evaluation implementation is adapted from [Wanda](https://github.com/locuslab/wanda).
 
-## Cite
+## Citation
 
-If you found this work useful, please consider citing:
+If you find this work useful, please consider citing (accepted to ACL 2026 Main Conference; the ACL Anthology entry will be available after the proceedings are published):
 
-```
-@article{pei2025cmoe,
-  title={CMoE: Fast Carving of Mixture-of-Experts for Efficient LLM Inference},
-  author={Pei, Zehua and Zou, Lancheng and Zhen, Hui-Ling and Yu, Xianzhi and Liu, Wulong and Pan, Sinno Jialin and Yuan, Mingxuan and Yu, Bei},
+```bibtex
+@article{pei2026analytical,
+  title={Analytical FFN-to-MoE Restructuring via Activation Pattern Analysis},
+  author={Pei, Zehua and Zhen, Hui-Ling and Zou, Lancheng and Yu, Xianzhi and Liu, Wulong and Pan, Sinno Jialin and Yuan, Mingxuan and Yu, Bei},
   journal={arXiv preprint arXiv:2502.04416},
-  year={2025}
+  year={2026}
 }
 ```
+
+## License
+
+This project is released under the MIT License. See [LICENSE](LICENSE) for details.
