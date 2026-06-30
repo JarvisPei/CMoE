@@ -69,13 +69,14 @@ For zero-shot downstream tasks (PIQA, WinoGrande, ARC-E/C, HellaSwag, MMLU, etc.
 
 ## Citation
 
-If you find this work useful, please consider citing (accepted to ACL 2026 Main Conference; the ACL Anthology entry will be available after the proceedings are published):
+If you find this work useful, please consider citing:
 
 ```bibtex
-@article{pei2026analytical,
+@inproceedings{pei2026analytical,
   title={Analytical FFN-to-MoE Restructuring via Activation Pattern Analysis},
   author={Pei, Zehua and Zhen, Hui-Ling and Zou, Lancheng and Yu, Xianzhi and Liu, Wulong and Pan, Sinno Jialin and Yuan, Mingxuan and Yu, Bei},
-  journal={arXiv preprint arXiv:2502.04416},
+  booktitle={Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)},
+  pages={4777--4789},
   year={2026}
 }
 ```
